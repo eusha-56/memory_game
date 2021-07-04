@@ -8,6 +8,13 @@ body{
     font-family: cursive;
     background: rgb(50, 50, 50);
 }
+@media (min-aspect-ratio: 1/1){
+    #game_name_text:hover{
+        transition: 0.4s;
+        margin-bottom: -0.2cm;
+        font-size: 1.2cm;
+    }
+}
 @media (min-height: 13cm){
     body{
         overflow: hidden;
@@ -38,11 +45,6 @@ body{
 #game_name{
     font-size: 1cm;
     text-shadow: 2px 2px 2px rgba(255, 255, 255, 0.7);
-}
-#game_name_text:hover{
-    transition: 0.4s;
-    margin-bottom: -0.2cm;
-    font-size: 1.2cm;
 }
 .boro_container{
     display: flex;
