@@ -2,6 +2,7 @@ let cards_flipped = 0
 let moves_left = grid() ** 2
 let moves_left_text = document.getElementById("moves_left")
 let cards_clicked = []
+let cards_left = grid() ** 2
 
 function grid() {
     return 6
@@ -92,6 +93,7 @@ function flip_enable() {
     if (cards_flipped > 1) {
         flip_disable()
         if (cards_clicked[0].value === cards_clicked[1].value) {
+            cards_left = cards_left - 2
             setTimeout(() => {
                 cards_clicked.forEach(element => {
                     element.classList.remove("card_container")
@@ -102,8 +104,31 @@ function flip_enable() {
         }
         setTimeout(() => {
             reverse_flip()
-            flip()
+            if (moves_left > 0) {
+                flip()
+            }else{
+                moves_finished()
+            }
+            if (cards_left === 0) {
+                game_finished()
+            }
         }, 1000);
+    }
+}
+
+
+function game_finished() {
+    if (confirm(`Wow that's great!! You have finished the game with ${grid() ** 2 - moves_left} moves only. Wanna play again?`)) {
+        grid_closer()
+        grid_maker()
+    }
+}
+
+
+function moves_finished() {
+    if(confirm("Ops! You have run out of moves. Restart?")){
+        grid_closer()
+        grid_maker()
     }
 }
 
