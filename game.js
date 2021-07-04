@@ -5,7 +5,7 @@ let cards_clicked = []
 let cards_left = grid() ** 2
 
 function grid() {
-    return 6
+    return 4
 }
 
 function image_values() {
