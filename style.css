@@ -1,0 +1,129 @@
+body{
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    font-family: cursive;
+    background: rgb(50, 50, 50);
+}
+@media (min-height: 13cm){
+    body{
+        overflow: hidden;
+    }
+}
+@media (max-height: 13cm){
+    body{
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+}
+.name_container{
+    margin: 0.8cm;
+    animation: top_to_in 1s;
+}
+#game_title,#game_name{
+    background: linear-gradient( #d66d75, #e29587);
+    animation: rotate 6s infinite;
+    font-weight: 900;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    text-align: center;
+}
+#game_title{
+    margin-bottom: 0.5cm;
+    font-size: 0.4cm;
+}
+#game_name{
+    font-size: 1cm;
+    text-shadow: 2px 2px 2px rgba(255, 255, 255, 0.7);
+}
+#game_name_text:hover{
+    transition: 0.4s;
+    margin-bottom: -0.2cm;
+    font-size: 1.2cm;
+}
+.boro_container{
+    display: flex;
+    justify-content: center;
+}
+.container{
+    width: 3cm;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    animation: bottom_to_in 1s;
+}
+.home_menu_button,.options{
+    text-align: center;
+    margin: 10px auto;
+    border-radius: 20px;
+    background: linear-gradient(90deg, #d66d75, #e29587);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.home_menu_button{
+    width: 3cm;
+    height: 1.2cm;
+    animation: rotate 4.5s infinite;
+}
+.options{
+    width: 2.5cm;
+    height: 1cm;
+    margin-top: 5px auto;
+    animation: rotate 3s infinite;
+}
+.home_menu_button:hover, .options:hover{
+    margin-left: 0.8cm;
+}
+.blur{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    background: inherit;
+    filter: blur(7px);
+    z-index: -1;
+    border-radius: 20px;
+}
+.button,.option_button{
+    font-family: inherit;
+    height: calc(100% - 10px);
+    width: calc(100% - 10px);
+    border: none;
+    border-radius: 20px;
+    background: rgb(50, 50, 50);
+    color: white;
+    z-index: 1;
+}
+
+@keyframes rotate{
+    0%{
+        filter: hue-rotate(0deg);
+    }
+    50%{
+        filter: hue-rotate(360deg);
+    }
+    100%{
+        filter: hue-rotate(0deg);
+    }
+}
+
+@keyframes top_to_in{
+    0%{
+        margin-top: -200px;
+    }
+    100%{
+        margin: 0.8cm;
+    }
+}
+
+@keyframes bottom_to_in{
+    0%{
+        margin-top: 160vh;
+    }
+    100%{
+        margin-top: 0;
+    }
+}
