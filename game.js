@@ -1,14 +1,13 @@
 let cards_flipped = 0
-let moves_left = grid() ** 2
+let moves_left
 let moves_left_text = document.getElementById("moves_left")
 let cards_clicked = []
-let cards_left = grid() ** 2
+let cards_left
 
 function grid() {
     return 4
 }
 
-//returns a values for each image in a shuffled array
 function image_values() {
     let imges = []
     for (let i = 1; i <= grid() ** 2 / 2; i++) {
@@ -18,8 +17,6 @@ function image_values() {
     return shuffle(imges)
 }
 
-
-//shuffles given array
 function shuffle(arr) {
     let shuffled_arr = []
     while (arr.length > 0) {
@@ -31,9 +28,9 @@ function shuffle(arr) {
 }
 
 
-//makes grids and begins the game
 function grid_maker() {
     moves_left = grid() ** 2
+    cards_left = grid() ** 2
     moves_left_text.innerHTML = `Moves left: ${moves_left}`
     let game_container = document.querySelector(".game_container")
     game_container.innerHTML = ""
@@ -63,11 +60,8 @@ function grid_maker() {
         game_container.appendChild(card_flipper)
     }
     show_cards()
-    flip()
 }
 
-
-//displays all cards for3 seconds
 function show_cards() {
     let cards = document.querySelectorAll(".card_container")
     setTimeout(() => {        
@@ -79,11 +73,14 @@ function show_cards() {
         for (let i = 0; i < Object.keys(cards).length; i++) {
             cards[i].style.transform = "rotateY(0deg)"
         }
-    }, 4500);
+    }, 4000);
+    setTimeout(() => {
+        flip()
+    }, 4000);
 }
 
 
-//adding click to flip on cards
+//adding flip to cards
 function flip() {
     var cards = document.querySelectorAll(".card_container")
     for (let i = 0; i < Object.keys(cards).length; i++) {
@@ -91,9 +88,10 @@ function flip() {
     }
 }
 
-//enables click to flip on each card
+
 function flip_enable() {
     this.style.transform = "rotateY(180deg)"
+    this.removeEventListener("click",flip_enable)
     cards_clicked.push(this)
     cards_flipped++
     if (cards_flipped > 1) {
@@ -110,20 +108,35 @@ function flip_enable() {
         }
         setTimeout(() => {
             reverse_flip()
+            if (cards_left === 0) {
+                game_finished()
+            }
             if (moves_left > 0) {
                 flip()
             }else{
                 moves_finished()
-            }
-            if (cards_left === 0) {
-                game_finished()
             }
         }, 1000);
     }
 }
 
 
-//disables click to flip on each card
+function game_finished() {
+    if (confirm(`Wow that's great!! You have finished the game with ${grid() ** 2 - moves_left} moves only. Wanna play again?`)) {
+        grid_closer()
+        grid_maker()
+    }
+}
+
+
+function moves_finished() {
+    if(confirm("Ops! You have run out of moves. Restart?")){
+        grid_closer()
+        grid_maker()
+    }
+}
+
+
 function flip_disable() {
     var cards = document.querySelectorAll(".card_container")
     for (let i = 0; i < Object.keys(cards).length; i++){
@@ -132,7 +145,6 @@ function flip_disable() {
 }
 
 
-//flips flipped cards
 function reverse_flip() {
     cards_clicked.forEach(element => {
         element.style.transform = "rotateY(0deg)"
@@ -145,34 +157,11 @@ function reverse_flip() {
 }
 
 
-//check if game is finished
-function game_finished() {
-    if (confirm(`Wow that's great!! You have finished the game with ${grid() ** 2 - moves_left} moves only. Wanna play again?`)) {
-        grid_closer()
-        grid_maker()
-    }
-}
-
-
-//check if moves are finished
-function moves_finished() {
-    if(confirm("Ops! You have run out of moves. Restart?")){
-        grid_closer()
-        grid_maker()
-    }
-}
-
-
-//closes grids
 function grid_closer() {
-    moves_left = 0 
     cards_flipped = 0
-    moves_left_text.innerHTML = `Moves left: ${moves_left}`
     document.querySelector(".game_container").innerHTML = ""
 }
 
-
-//resets game
 function reset() {
     if (confirm("Confirm reset?")) {
         grid_closer()
@@ -180,13 +169,10 @@ function reset() {
     }
 }
 
-
-//back to home
 function back() {
     if (confirm("Confirm Close?")) {
         window.history.back()
     }
 }
-
 
 grid_maker()
